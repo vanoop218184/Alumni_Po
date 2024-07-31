@@ -5,7 +5,7 @@ const Gal = require("../Models/Gal.js");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
-const moment=require("moment")
+const moment = require("moment");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,7 +39,6 @@ function checkFileType(file, cb) {
 }
 
 class AlumniControllers {
- 
   static Register = async (req, res) => {
     upload(req, res, async (err) => {
       if (err) {
@@ -82,24 +81,19 @@ class AlumniControllers {
             password,
           });
 
-    
-
           let result = await user.save();
-          result = await result.toObject(); 
+          result = await result.toObject();
 
-        
           let saved_user = await User.findOne({ email: email });
           delete saved_user.password;
           saved_user = saved_user.toObject();
 
-          
           const token = jwt.sign(
             { USER_id: saved_user._id },
             process.env.JWT_TOKEN,
             { expiresIn: "7d" }
           );
 
-      
           res.send({
             status: "Passed",
             message: "Registered Successfully",
@@ -107,7 +101,6 @@ class AlumniControllers {
             picture: saved_user.picture,
           });
         } else {
-        
           res.send({
             status: "failed",
             message: "All data are necessary to be filled",
@@ -216,10 +209,10 @@ class AlumniControllers {
     res.send(result);
   };
   static GetAllJobs = async (req, res) => {
-    const currentDate = moment().format('YYYY-MM-DD');
+    const currentDate = moment().format("YYYY-MM-DD");
     console.log(currentDate);
     const result = await Job.find({
-      date: { $gte: currentDate }
+      date: { $gte: currentDate },
     });
     res.send(result);
   };
