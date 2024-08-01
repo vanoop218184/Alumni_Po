@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Sign = () => {
   const [name, setName] = useState("");
@@ -13,38 +13,38 @@ const Sign = () => {
   const [company, setCompany] = useState("");
   const navigate = useNavigate();
 
-  const handleSumbit = async () => { 
-  try {
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('position', position);
-    formData.append('link', link);
-    formData.append('batch', batch);
-    formData.append('picture', picture);
-    formData.append('password', password);
-    formData.append('company', company);
-    let result = await fetch("http://localhost:8001/alumni/register", {
-      method: 'POST',
-      body: formData
-    });
+  const handleSumbit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("position", position);
+      formData.append("link", link);
+      formData.append("batch", batch);
+      formData.append("picture", picture);
+      formData.append("password", password);
+      formData.append("company", company);
+      let result = await fetch(
+        "https://alumni-po.onrender.com/alumni/register",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
-    result = await result.json();
-    console.log(result);
-    if (result.status === 'Passed') {
-      
-          localStorage.setItem('user', JSON.stringify(result));
-          navigate("/");
-    
-    } else {
-      alert(result.message.message);
+      result = await result.json();
+      console.log(result);
+      if (result.status === "Passed") {
+        localStorage.setItem("user", JSON.stringify(result));
+        navigate("/");
+      } else {
+        alert(result.message.message);
+      }
+    } catch (error) {
+      alert(error.message);
     }
-  } catch (error) {
-    alert(error.message);
-  }
-   
-  }
+  };
 
   return (
     <>

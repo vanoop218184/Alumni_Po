@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate,useLocation } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { ObjectId } from 'bson';
 const Updatep = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -12,64 +12,65 @@ const Updatep = () => {
   const [link, setLink] = useState("");
   const [batch, setBatch] = useState("");
   let [picture, setPicture] = useState("");
-  let [user,setUser]=useState("");
+  let [user, setUser] = useState("");
   const [company, setCompany] = useState("");
-  const [id,setId]=useState("");
-  let localdata = localStorage.getItem('user');
-  localdata= JSON.parse(localdata);
+  const [id, setId] = useState("");
+  let localdata = localStorage.getItem("user");
+  localdata = JSON.parse(localdata);
   const location = useLocation();
- useEffect(()=>{
-    const fun=async()=>{
-      let  data=await 
-        fetch("http://localhost:8001/alumni/dashdata", {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${localdata.token}`
-          }
-        })
-        data=await data.json();
-        setUser(data.user);
-        const val=data.user;
-        setId(val._id);
-        setName(val.name);
-        setEmail(val.email);
-        setPhone(val.phone)
-        setCompany(val.company);
-        setPosition(val.position);
-        setLink(val.link);
-        setBatch(val.batch);
-    }
+  useEffect(() => {
+    const fun = async () => {
+      let data = await fetch("https://alumni-po.onrender.com/alumni/dashdata", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localdata.token}`,
+        },
+      });
+      data = await data.json();
+      setUser(data.user);
+      const val = data.user;
+      setId(val._id);
+      setName(val.name);
+      setEmail(val.email);
+      setPhone(val.phone);
+      setCompany(val.company);
+      setPosition(val.position);
+      setLink(val.link);
+      setBatch(val.batch);
+    };
     fun();
-   },[localdata.token, location.pathname]) ;
-  
-  const handleupdate= async()=>{ 
+  }, [localdata.token, location.pathname]);
+
+  const handleupdate = async () => {
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('position', position);
-    formData.append('link', link);
-    formData.append('batch', batch);
-    formData.append('picture', picture);
-    formData.append('company', company);
-    
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("position", position);
+    formData.append("link", link);
+    formData.append("batch", batch);
+    formData.append("picture", picture);
+    formData.append("company", company);
+
     try {
-      let result=await fetch(`http://localhost:8001/alumni/user/${id}`,{
-        method:'Put',
-        body:formData,
-      })
-      result=await result.json();
-      if(result.message)
+      let result = await fetch(
+        `https://alumni-po.onrender.com/alumni/user/${id}`,
         {
-          toast.error(result.message.message, {
-            position: "top-center"});
-            
+          method: "Put",
+          body: formData,
         }
+      );
+      result = await result.json();
+      if (result.message) {
+        toast.error(result.message.message, {
+          position: "top-center",
+        });
+      }
     } catch (error) {
-    alert(error);
+      alert(error);
     }
-    navigate("/profile")
-  }
+    navigate("/profile");
+  };
   return (
     <>
       <div className="flex justify-center">
@@ -106,7 +107,7 @@ const Updatep = () => {
                     id="email"
                     className="border-2 border-gray-300 rounded-md p-2 font-sans"
                     placeholder="Enter Email Address"
-                     disabled
+                    disabled
                   />
                 </div>
                 <div className="flex flex-col">
@@ -207,7 +208,7 @@ const Updatep = () => {
                     className=" font-bold text-center p-3 rounded-lg hover:text-blue-950 border-[1px] shadow-xl border-blue-950 hover:bg-slate-50 text-xl  font-sans mb-6 text-white bg-blue-950"
                     onClick={handleupdate}
                   >
-                   Update
+                    Update
                   </button>
                 </div>
               </div>

@@ -3,32 +3,33 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Alu_card from "./AluCard";
 
-
 const years = Array.from({ length: 26 }, (_, index) => 2000 + index).reverse();
 
 const Alum = () => {
-  const [data,SetData]=useState([]);
-  useEffect(()=>{
-    const run=async()=>{
+  const [data, SetData] = useState([]);
+  useEffect(() => {
+    const run = async () => {
       try {
-         let result=await fetch("http://localhost:8001/alumni/alum");
-          result=await result.json();
-         SetData(result); 
+        let result = await fetch("https://alumni-po.onrender.com/alumni/alum");
+        result = await result.json();
+        SetData(result);
       } catch (error) {
-         alert(error.messege)
+        alert(error.messege);
       }
-    }
+    };
     run();
-  },[]);
+  }, []);
   return (
     <div className="flex justify-center">
       <div className="w-10/12">
         <div className="flex justify-center p-5 py-8">
-          <h1 className="font-extrabold text-center font-serif text-3xl">AlmaMaters</h1>
+          <h1 className="font-extrabold text-center font-serif text-3xl">
+            AlmaMaters
+          </h1>
         </div>
         {years.map((year) => {
           const alumni = data.filter((item) => item.batch === year.toString());
-        
+
           if (alumni.length === 0) return null;
 
           return (

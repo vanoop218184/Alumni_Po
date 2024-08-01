@@ -9,7 +9,7 @@ const Dash = () => {
   localdata = JSON.parse(localdata);
   useEffect(() => {
     const fun = async () => {
-      let data = await fetch("http://localhost:8001/alumni/dashdata", {
+      let data = await fetch("https://alumni-po.onrender.com/alumni/dashdata", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${localdata.token}`,
@@ -22,7 +22,7 @@ const Dash = () => {
   }, []);
 
   if (user) {
-    let t = `http://localhost:8001/uploads/${user.picture}`;
+    let t = `https://alumni-po.onrender.com/uploads/${user.picture}`;
     if (t) {
       im = t;
     }

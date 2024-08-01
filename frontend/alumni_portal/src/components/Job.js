@@ -4,7 +4,6 @@ import Job_card from "./JobCard.js";
 const types = ["CSE", "ECE", "ME", "CE", "EE", "Others"];
 
 const Job = () => {
-  
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const handleSearch = (event) => {
@@ -13,7 +12,7 @@ const Job = () => {
   useEffect(() => {
     const fun = async () => {
       try {
-        let result = await fetch("http://localhost:8001/alumni/jobs");
+        let result = await fetch("https://alumni-po.onrender.com/alumni/jobs");
         if (result) {
           result = await result.json();
           setData(result);
@@ -41,19 +40,22 @@ const Job = () => {
                 Jobs Related to {val} Students
               </h1>
               <div className="grid shadow-xl grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 border-2 border-slate-300 rounded-3xl">
-                {filteredData.map((job) => ({
-
-                },
-                  <Job_card
-                    key={job.id}
-                    company={job.company}
-                    role={job.role}
-                    type={job.type}
-                    location={job.location}
-                    dat={job.date}
-                    link={job.link}
-                  />
-                ))}
+                {filteredData.map(
+                  (job) => (
+                    {},
+                    (
+                      <Job_card
+                        key={job.id}
+                        company={job.company}
+                        role={job.role}
+                        type={job.type}
+                        location={job.location}
+                        dat={job.date}
+                        link={job.link}
+                      />
+                    )
+                  )
+                )}
               </div>
             </div>
           ) : null;
